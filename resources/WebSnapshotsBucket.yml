@@ -1,0 +1,4 @@
+WebSnapshotsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+        BucketName: ${self:custom.WebSnapshotsBucket.name}
