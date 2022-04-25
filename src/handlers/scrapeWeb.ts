@@ -9,22 +9,22 @@ import validator from '@middy/validator'
 import httpErrorHandler from '@middy/http-error-handler'
 import scrapeWebPageSchema from '../schemas/scrapeWebPageSchema'
 
-interface IEvent<TBody> extends Omit<APIGatewayProxyEventV2, 'body'> {
+export interface IEvent<TBody> extends Omit<APIGatewayProxyEventV2, 'body'> {
     body: TBody
 }
 
-interface IBody {
+export interface IBody {
     url: string
     fileName: string
     waitForSelector: string
 }
 
-const startBrowser = async (): Promise<Browser | undefined> => {
+export const startBrowser = async (): Promise<Browser | undefined> => {
     let browser: Browser
     try {
         browser = await chromium.puppeteer.launch({
             args: chromium.args,
-            defaultViewport: chromium.defaultViewport,
+            defaultViewport: { width: 1280, height: 800 },
             executablePath: await chromium.executablePath,
             headless: chromium.headless,
             ignoreHTTPSErrors: true
@@ -37,7 +37,7 @@ const startBrowser = async (): Promise<Browser | undefined> => {
     }
 }
 
-const scrapeWeb = async (event: IEvent<IBody>): Promise<APIGatewayProxyResultV2> => {
+export const scrapeWeb = async (event: IEvent<IBody>): Promise<APIGatewayProxyResultV2> => {
     const { url, fileName, waitForSelector } = event.body
 
     try {
@@ -45,7 +45,6 @@ const scrapeWeb = async (event: IEvent<IBody>): Promise<APIGatewayProxyResultV2>
 
         if (browser) {
             const page = await browser.newPage()
-            await page.setViewport({ width: 1280, height: 800 })
             await page.goto(url)
             await page.waitForSelector(waitForSelector)
             const html = await page.content()
