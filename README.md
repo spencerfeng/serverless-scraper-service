@@ -1,71 +1,38 @@
-<!--
-title: 'AWS NodeJS Example'
-description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Serverless Scraper Service
 
-# Serverless Framework AWS NodeJS Example
+This service allows the user to grab the HTML of a web page and save it to the S3 bucket.
 
-This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework. The deployed function does not include any event definitions as well as any kind of persistence (database). For more advanced configurations check out the [examples repo](https://github.com/serverless/examples/) which includes integrations with SQS, DynamoDB or examples of functions that are triggered in `cron`-like manner. For details about configuration of specific `events`, please refer to our [documentation](https://www.serverless.com/framework/docs/providers/aws/events/).
-
-## Usage
-
-### Deployment
-
-In order to deploy the example, you need to run the following command:
+## Unit tests
 
 ```
-$ serverless deploy
+$ make test
 ```
 
-After running deploy, you should see output similar to:
+## How to deploy it locally
 
-```bash
-Deploying aws-node-project to stage dev (us-east-1)
+### Step 1
 
-✔ Service deployed to stack aws-node-project-dev (112s)
+Create shell environment variables called 'AWS_ACCESS_KEY_ID' and 'AWS_SECRET_ACCESS_KEY' and assign your corresponding AWS values to them.
 
-functions:
-  hello: aws-node-project-dev-hello (1.5 kB)
-```
-
-### Invocation
-
-After successful deployment, you can invoke the deployed function by using the following command:
-
-```bash
-serverless invoke --function hello
-```
-
-Which should result in response similar to the following:
-
-```json
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": {}\n}"
-}
-```
-
-### Local development
-
-You can invoke your function locally by using the following command:
-
-```bash
-serverless invoke local --function hello
-```
-
-Which should result in response similar to the following:
+### Step 2
 
 ```
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
+$ make deploy-dev
 ```
+
+## CI/CD
+
+-   After a pull request is made against the main branch, a pipeline will start to lint and test the code changes.
+-   After the changes are merged to the main branch, the changes will be deployed to AWS.
+
+## Tech stack
+
+-   Serverless framework
+-   AWS Lambda function
+-   AWS Simple Storage
+-   API Gateway
+-   Github Action
+-   Docker
+-   Typescript
+-   Jest
+-   puppeteer
