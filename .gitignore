@@ -2,3 +2,4 @@ node_modules
 jspm_packages
 .serverless
 .DS_Store
+.env
