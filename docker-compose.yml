@@ -17,4 +17,4 @@ services:
         env_file: '.env'
         volumes:
             - '.:/app'
-        entrypoint: /app/scripts/entrypoint.sh
+        entrypoint: /app/scripts/deploy.sh
